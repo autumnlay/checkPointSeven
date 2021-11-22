@@ -7,10 +7,10 @@ export class CommentsController extends BaseController {
     super('api/comments')
     this.router
       .get('', this.getAll)
-      .get('/:id', this.getById)
+      // .get('/:id', this.getById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
-      .delete('/:id', this.remove)
+      // .delete('/:id', this.remove)
   }
 
   async getAll(req, res, next) {
@@ -24,14 +24,14 @@ export class CommentsController extends BaseController {
     }
   }
 
-  async getById(req, res, next) {
-    try {
-      const comment = await commentsService.getById(req.params.id)
-      return res.send(comment)
-    } catch (error) {
-      next(error)
-    }
-  }
+  // async getById(req, res, next) {
+  //   try {
+  //     const comment = await commentsService.getById(req.params.id)
+  //     return res.send(comment)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 
   async create(req, res, next) {
     try {
@@ -43,12 +43,12 @@ export class CommentsController extends BaseController {
     }
   }
 
-  async remove(req, res, next) {
-    try {
-      await commentsService.remove(req.params.id, req.userInfo.id)
-      res.send('Comment Has Successfully been Deleted')
-    } catch (error) {
-      next(error)
-    }
-  }
+  // async remove(req, res, next) {
+  //   try {
+  //     await commentsService.remove(req.params.id, req.userInfo.id)
+  //     res.send('Comment Has Successfully been Deleted')
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 }

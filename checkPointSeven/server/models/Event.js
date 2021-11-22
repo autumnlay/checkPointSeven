@@ -12,8 +12,8 @@ export const EventSchema = new Schema(
     isCanceled: { type: Boolean, default: false },
     type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'] },
     creatorId: { type: mongoose.Types.ObjectId, ref: 'Profile', required: true }
-
-  }, { timestamps: true, toJSON: { virtuals: true } }
+  }
+  // , { timestamps: true, toJSON: { virtuals: true } }
 )
 
 EventSchema.virtual('creator', {

@@ -10,15 +10,15 @@ export class EventsController extends BaseController {
       .get('/:id', this.getById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
-      .put('/:id', this.edit)
+      // .put('/:id', this.edit)
       .delete('/:id', this.remove)
   }
 
   async getAll(req, res, next) {
     try {
-      const query = req.query
-      query.creatorId = req.userInfo.id
-      const events = await eventsService.getAll(query)
+      // const query = req.query
+      // query.creatorId = req.userInfo
+      const events = await eventsService.getAll(req.query)
       return res.send(events)
     } catch (error) {
       next(error)
@@ -27,6 +27,7 @@ export class EventsController extends BaseController {
 
   async getById(req, res, next) {
     try {
+      // req.params.id = req.userInfo.id
       const event = await eventsService.getById(req.params.id)
       return res.send(event)
     } catch (error) {
@@ -57,7 +58,7 @@ export class EventsController extends BaseController {
 
   async remove(req, res, next) {
     try {
-      await eventsService.remove(req.params.id, req.userInfo.id)
+      await eventsService.remove(req.params, req.userInfo)
       res.send('Event Has Successfully been Deleted')
     } catch (error) {
       next(error)

@@ -10,7 +10,7 @@ export class AttendeesController extends BaseController {
     // .get('', this.getAll)
     // .get('/:id', this.getById)
       .post('', this.create)
-      .delete('/:id', this.remove)
+      // .delete('/:id', this.remove)
   }
 
   async create(req, res, next) {

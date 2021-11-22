@@ -6,6 +6,7 @@ export const AttendeeSchema = new Schema(
     eventId: { type: Schema.Types.ObjectId, ref: 'Event', required: true },
     accountId: { type: Schema.Types.ObjectId, ref: 'Account', required: true }
   }
+  //, { timestamps: true, toJSON: { virtuals: true } }
 )
 
 AttendeeSchema.index({ eventId: 1, accountId: 1 }, { unique: true })

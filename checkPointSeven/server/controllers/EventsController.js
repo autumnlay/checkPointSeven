@@ -1,4 +1,6 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
+import { attendeesService } from '../services/AttendeesService'
+import { commentsService } from '../services/CommentsService'
 import { eventsService } from '../services/EventsService'
 import BaseController from '../utils/BaseController'
 
@@ -8,9 +10,11 @@ export class EventsController extends BaseController {
     this.router
       .get('', this.getAll)
       .get('/:id', this.getById)
+      .get('/:id/comments', this.getCommentsByEventId)
+      .get('/:id/attendees', this.getAttendeesByEventId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
-      // .put('/:id', this.edit)
+      .put('/:id', this.edit)
       .delete('/:id', this.remove)
   }
 
@@ -35,6 +39,25 @@ export class EventsController extends BaseController {
     }
   }
 
+  async getCommentsByEventId(req, res, next) {
+    try {
+      // req.query.creatorId = req.userInfo.id
+      const comments = await commentsService.getAll(req.params.id)
+      return res.send(comments)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getAttendeesByEventId(req, res, next) {
+    try {
+      const attend = await attendeesService.getAttendeesByEventId(req.params.id)
+      return res.send(attend)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async create(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
@@ -49,6 +72,7 @@ export class EventsController extends BaseController {
     try {
       req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
+      delete req.body.isCanceled
       const event = await eventsService.edit(req.body)
       return res.send(event)
     } catch (error) {
@@ -58,7 +82,7 @@ export class EventsController extends BaseController {
 
   async remove(req, res, next) {
     try {
-      await eventsService.remove(req.params, req.userInfo)
+      await eventsService.remove(req.params.id, req.userInfo.id)
       res.send('Event Has Successfully been Deleted')
     } catch (error) {
       next(error)

@@ -13,9 +13,8 @@ class EventsService {
   }
 
   async getById(id) {
-    // const event = await dbContext.Events.findById(id).populate('creator', 'name')
-    const event = await dbContext.Events.findById(id)
-
+    const event = await dbContext.Events.findById(id).populate('creator', 'name')
+    // const event = await dbContext.Events.findById(id)
     if (!event) {
       throw new BadRequest('Invalid Id')
     }
@@ -32,6 +31,9 @@ class EventsService {
     if (event.creatorId.toString() !== body.creatorId) {
       throw new Forbidden('You are not aloud to edit this event')
     }
+    if (event.isCanceled) {
+      throw new BadRequest('you cant do this')
+    }
     const updateEvent = dbContext.Events.findOneAndUpdate({ _id: body.id }, body, { new: true })
     return await updateEvent
   }
@@ -41,7 +43,8 @@ class EventsService {
     if (event.creatorId.toString() !== userId) {
       throw new Forbidden('You are not aloud to delete this event')
     }
-    await dbContext.Events.findByIdAndDelete(eventId)
+    event.isCanceled = true
+    await event.save()
   }
 }
 export const eventsService = new EventsService()

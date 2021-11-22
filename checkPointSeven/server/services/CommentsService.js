@@ -8,12 +8,12 @@ class CommentsService {
   }
 
   async getAll(eventId) {
-    // return await dbContext.Comments.find({ eventId: eventId }).populate('creator', 'name')
-    return await dbContext.Comments.find(eventId).populate('creator', 'name')
+    return await dbContext.Comments.find({ eventId: eventId }).populate('creator', 'name')
+    // return await dbContext.Comments.find(eventId).populate('creator', 'name')
   }
 
   async getById(id) {
-    const comment = await dbContext.Comments.findById(id).populate('creator', 'name')
+    const comment = await dbContext.Comments.findById(id).populate('creator', 'name picture')
     if (!comment) {
       throw new BadRequest('Invalid Id')
     }
@@ -22,7 +22,8 @@ class CommentsService {
 
   async create(body) {
     const newComment = await dbContext.Comments.create(body)
-    return newComment.populate('creator', 'name')
+    // await newComment.populate('creator')
+    return await this.getById(newComment.id)
   }
 
   async remove(commentId, userId) {

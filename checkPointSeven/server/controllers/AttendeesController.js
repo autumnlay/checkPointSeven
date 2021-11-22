@@ -7,15 +7,14 @@ export class AttendeesController extends BaseController {
     super('api/attendees')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-    // .get('', this.getAll)
-    // .get('/:id', this.getById)
       .post('', this.create)
-      // .delete('/:id', this.remove)
+      .delete('/:id', this.remove)
   }
 
   async create(req, res, next) {
     try {
-      req.body.attendeeId = req.userInfo.id
+      // FIXME Mark reviewed this with mick test (will currently fail the account tests)
+      req.body.accountId = req.userInfo.id
       const attendee = await attendeesService.create(req.body)
       return res.send(attendee)
     } catch (error) {
@@ -31,23 +30,4 @@ export class AttendeesController extends BaseController {
       next(error)
     }
   }
-  //   async getAll(req, res, next) {
-  //     try {
-  //       const query = req.query
-  //       query.creatorId = req.userInfo.id
-  //       const attendees = await attendeesService.getAll(query)
-  //       return res.send(attendees)
-  //     } catch (error) {
-  //       next(error)
-  //     }
-  //   }
-
-  //   async getById(req, res, next) {
-  //     try {
-  //       const attendee = await attendeesService.getById(req.params.id)
-  //       return res.send(attendee)
-  //     } catch (error) {
-  //       next(error)
-  //     }
-  //   }
 }

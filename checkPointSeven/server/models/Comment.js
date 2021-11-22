@@ -8,7 +8,7 @@ export const CommentSchema = new Schema(
     eventId: { type: Schema.Types.ObjectId, ref: 'Event', required: true },
     creatorId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true }
   }
-  //, { timestamps: true, toJSON: { virtuals: true } }
+  , { timestamps: true, toJSON: { virtuals: true } }
 )
 
 CommentSchema.virtual('creator', {

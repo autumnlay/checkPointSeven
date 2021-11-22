@@ -16,28 +16,31 @@ class AttendeesService {
     return attend
   }
 
-  async getAttendsByEventId(eventId) {
-    return await dbContext.Attendees.find({ eventId }).populate('attendee')
+  async getAttendeesByEventId(eventId) {
+    return await dbContext.Attendees.find({ eventId }).populate('account')
   }
 
-  async getAttendsByAttendeeId(attendeeId) {
-    return await dbContext.Attendees.find({ attendeeId }).populate('event')
+  async getAttendsByAccountId(accountId) {
+    return await dbContext.Attendees.find({ accountId }).populate('event')
   }
 
   async create(body) {
-    await eventsService.getById(body.eventId)
-    const found = await dbContext.Attendees.findOneAndDelete({ eventId: body.eventId, attendeeId: body.attendeeId })
+    const event = await eventsService.getById(body.eventId)
+    const found = await dbContext.Attendees.findOne({ eventId: body.eventId, accountId: body.accountId })
     if (found) {
       throw new BadRequest('You are already attending')
     }
     const attend = await dbContext.Attendees.create(body)
-    await attend.populate('attendence for event')
+    await attend.populate('account')
+    await attend.populate('event')
+    event.capacity--
+    await event.save()
     return attend
   }
 
   async remove(attendeeId, userId) {
     const attendee = await this.getById(attendeeId)
-    if (attendee.id.toString() !== userId) {
+    if (attendee.accountId.toString() !== userId) {
       throw new BadRequest('This is not your attendee')
     }
     await dbContext.Attendees.findByIdAndDelete(attendeeId)

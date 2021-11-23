@@ -26,6 +26,9 @@ class AttendeesService {
 
   async create(body) {
     const event = await eventsService.getById(body.eventId)
+    if (event.capacity === 0) {
+      throw new BadRequest('capicity is at max')
+    }
     const found = await dbContext.Attendees.findOne({ eventId: body.eventId, accountId: body.accountId })
     if (found) {
       throw new BadRequest('You are already attending')
@@ -40,10 +43,13 @@ class AttendeesService {
 
   async remove(attendeeId, userId) {
     const attendee = await this.getById(attendeeId)
+    const event = await dbContext.Events.findById(attendee.eventId)
     if (attendee.accountId.toString() !== userId) {
       throw new BadRequest('This is not your attendee')
     }
     await dbContext.Attendees.findByIdAndDelete(attendeeId)
+    event.capacity++
+    await event.save()
   }
 }
 

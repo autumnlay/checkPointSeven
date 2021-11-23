@@ -11,10 +11,16 @@ const routes = [
     name: 'Home',
     component: loadPage('HomePage')
   },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   component: loadPage('AboutPage')
+  // },
   {
-    path: '/about',
-    name: 'About',
-    component: loadPage('AboutPage')
+     path: '/events/:id',
+    name: 'Event',
+    component: loadPage('EventPage'),
+    //beforeEnter: authGuard
   },
   {
     path: '/account',
@@ -22,6 +28,7 @@ const routes = [
     component: loadPage('AccountPage'),
     beforeEnter: authGuard
   }
+
 ]
 
 export const router = createRouter({

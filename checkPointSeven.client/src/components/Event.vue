@@ -8,7 +8,8 @@
     <p>{{ event.type }}</p>
     <div class="text-danger" v-if="event.capicity === 0">SOLD OUT</div>
     <div v-else>
-      <p><b>Seats left:</b> {{ event.capacity }}</p>
+      <p><b>Capacity left:</b> {{ event.capacity }}</p>
+      <button class="btn btn-primary" @click="join">Join Event</button>
     </div>
 
     <router-link
@@ -37,6 +38,11 @@ export default {
     //const router = useRouter()
     // async () => { await eventsService.getAll() }
     return {
+      async join() {
+        await eventsService.edit()
+        AppState.events
+        return AppState.attendees
+      }
       //events: computed(() => AppState.events),
       // async eventDetails(id) {
       //   try {

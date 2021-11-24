@@ -4,7 +4,7 @@
       <div class="d-flex flex-column align-items-center">
         <img
           alt="logo"
-          src="https://lh3.googleusercontent.com/proxy/zxu7uqhzmpWj1ofJPvCElJZ6aOsemjO_b-lAcyqBViMmqsKi54wChTVG_QUC81autUHFDyZe3J_HpuemkQpCp-qwyg"
+          src="https://img.favpng.com/10/21/2/radio-telecommunications-tower-computer-icons-clip-art-png-favpng-vLXwP8ATt3Mb2J9WNaTeQaBXa.jpg"
           height="45"
         />
       </div>

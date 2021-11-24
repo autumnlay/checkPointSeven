@@ -105,14 +105,16 @@ export default {
     })
     watchEffect(async () => { })
     return {
+      router,
       state,
       async createEvent() {
         try {
           await eventsService.create(state.editable);
           // Modal.getOrCreateInstance(document.getElementById("createEvent")).hide();
+          // router.push({ name: 'EventPage', params: { id: AppState.currentEvent } })
         } catch (error) {
           logger.error(error)
-          Pop.toast('creat Event is not working', 'error')
+          Pop.toast('create Event is not working', 'error')
         }
       }
     }

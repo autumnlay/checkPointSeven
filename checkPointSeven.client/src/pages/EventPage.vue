@@ -12,9 +12,8 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-12" v-for="c in comments" :key="c.id"></div>
     <Comment :comment="c" />
-    <!-- <div class="col-12" v-for="c in comments" :key="c.id">
-    </div> -->
   </div>
 </template>
 

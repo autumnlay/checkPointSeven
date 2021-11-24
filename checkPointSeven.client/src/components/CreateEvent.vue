@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createEvent">
+  <form @submit.prevent="createEvent" class="CreateEvent">
     <div class="justify-content-around d-flex row">
       <div class="col-md-6">
         <label for="name" class="form-label"> Event Name</label>

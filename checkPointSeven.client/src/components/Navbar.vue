@@ -20,6 +20,11 @@
     >
       <span class="navbar-toggler-icon" />
     </button>
+    <!-- <Modal id="CreateEvent">
+      <template #modal-title> Create Event </template>
+      <template #modal-body> <CreateEvent /> </template>
+    </Modal> -->
+    <button class="btn btn-secondary">Create Event</button>
 
     <div class="collapse navbar-collapse" id="navbarText">
       <!-- <ul class="navbar-nav me-auto">

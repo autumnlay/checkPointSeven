@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">this should be the comment section</div>
-    <div>{{ comments.body }}</div>
+    <div>{{ comment.body }}</div>
     <!-- TODO creator Id and picture -->
   </div>
 </template>

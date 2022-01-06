@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12" v-for="c in comments" :key="c.id"></div>
+    <div class="col-12" v-for="c in comment" :key="c.id"></div>
     <Comment :comment="c" />
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
     return {
       event: computed(() => AppState.currentEvent),
       account: computed(() => AppState.account),
-      comments: computed(() => AppState.comments)
+      comment: computed(() => AppState.comments)
       // TODO create remove function
     }
   }
